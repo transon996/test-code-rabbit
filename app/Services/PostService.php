@@ -1,13 +1,11 @@
 <?php
 
-
 namespace App\Services;
-
 
 use App\Enums\PostType;
 use App\Models\Post;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class PostService extends GeneralService
 {
@@ -20,7 +18,7 @@ class PostService extends GeneralService
     {
 
         data_set($data, 'image', $this->hanldeFileAndGetFileName(data_get($data, 'image'), POST_DIR));
-        data_set($data, 'user_id', Auth::user()->id);
+        data_set($data, 'user_id', authUserId());
 
         try {
             Post::create($data);
@@ -81,7 +79,7 @@ class PostService extends GeneralService
         $builder = Post::with('game', 'user')->orderBy('created_at', 'desc');
 
         if ($type === PostType::BY_FOLLOWING_USER) {
-            $userIdList = Auth::user()->follows()->get()->map(function ($follow) {
+            $userIdList = authUser()->follows()->get()->map(function ($follow) {
                 return $follow->user_id2;
             });
 
@@ -89,7 +87,7 @@ class PostService extends GeneralService
         }
 
         if ($type === PostType::BY_FAVORITE_GAME) {
-            $gameIdList = Auth::user()->favoriteGames()->get()->map(function ($game) {
+            $gameIdList = authUser()->favoriteGames()->get()->map(function ($game) {
                 return $game->game_id;
             });
             $builder->whereIn('game_id', $gameIdList);
@@ -97,7 +95,7 @@ class PostService extends GeneralService
         }
         if ($type === PostType::BY_MY_POST) {
 
-            $builder->whereIn('user_id', [Auth::user()->id]);
+            $builder->whereIn('user_id', [authUserId()]);
 
         }
 

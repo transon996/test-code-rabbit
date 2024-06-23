@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Game;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class UpdateGameRequest extends FormRequest
 {
@@ -18,7 +17,7 @@ class UpdateGameRequest extends FormRequest
         /** @var Game $game */
         $game = Game::find($this->route('game'));
 
-        return Auth::guard('admin')->user()->id === $game->admin_id;
+        return authAdminId() === $game->admin_id;
     }
 
     /**

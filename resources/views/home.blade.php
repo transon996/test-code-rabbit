@@ -61,7 +61,7 @@
                                     $isCheck = true;
                                 @endphp
                                 @foreach($post->likes as $like)
-                                    @if($like->user_id  === \Illuminate\Support\Facades\Auth::user()->id )
+                                    @if($like->user_id  === authUserId() )
                                         <form action="{{route('user.unlike')}}" method="post">
                                             @csrf
                                             @method('delete')
@@ -84,7 +84,7 @@
                                     <a href="{{route('posts.show',$post->id)}}" class="btn btn-dark">See more</a>
                                     <a href="{{route('user.report',$post->id)}}" class="btn btn-dark">Report</a>
                                 </div>
-                                @if(Auth::user() && Auth::user()->id === $post->user_id)
+                                @if(authUserId() === $post->user_id)
                                     <form action="{{route('posts.edit',$post->id)}}" method="get">
                                         @csrf
                                         <input type="submit" class="btn btn-warning" value="Edit">

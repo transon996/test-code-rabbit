@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin\Auth;
 
-use App\Models\Admin;
-use Validator;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Auth;

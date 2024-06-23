@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Comment;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class UpdateCommentRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class UpdateCommentRequest extends FormRequest
     public function authorize()
     {
         $comment = Comment::find($this->route('comment'));
-        return $comment && Auth::user()->id === $comment->user_id;
+        return $comment && authUserId() === $comment->user_id;
     }
 
     /**

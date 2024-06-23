@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Like;
-use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class LikeService
 {
@@ -13,7 +13,7 @@ class LikeService
     {
         try {
             Like::create([
-                'user_id' => Auth::user()->id,
+                'user_id' => authUserId(),
                 'post_id' => $data['post_id'],
             ]);
             return ['success' => true, 'message' => __('Like has been created')];
@@ -25,7 +25,7 @@ class LikeService
     public function remove(int $post_id): array
     {
         try {
-            $result = Like::where([['user_id', Auth::user()->id], ['post_id', $post_id]])->delete();
+            $result = Like::where([['user_id', authUserId()], ['post_id', $post_id]])->delete();
 
             if (!$result) {
                 return ['success' => false, 'message' => __('Like is not found')];

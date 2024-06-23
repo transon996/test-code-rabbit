@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\Game;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class RemoveGameRequest extends FormRequest
 {
@@ -16,7 +15,7 @@ class RemoveGameRequest extends FormRequest
     public function authorize()
     {
         $game = Game::find($this->route('game'));
-        return $game && $game->admin_id === Auth::guard('admin')->user()->id;
+        return $game && $game->admin_id === authAdminId();
     }
 
     /**

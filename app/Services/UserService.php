@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class UserService extends GeneralService
 {
@@ -19,7 +18,7 @@ class UserService extends GeneralService
             data_get($data, 'avatar') &&
             data_set($data, 'avatar', $this->hanldeFileAndGetFileName(data_get($data, 'avatar'), USER_DIR));
 
-            $result = User::where('id', Auth::user()->id)->update($data);
+            $result = User::where('id', authUserId())->update($data);
 
             if (!$result) {
                 return ['success' => false, 'message' => __('User not found')];
@@ -34,7 +33,7 @@ class UserService extends GeneralService
     public function updateInfo(array $data): array
     {
         try {
-            $result = User::where('id', Auth::user()->id)->update($data);
+            $result = User::where('id', authUserId())->update($data);
 
             if (!$result) {
                 return ['success' => false, 'message' => __('User not found')];

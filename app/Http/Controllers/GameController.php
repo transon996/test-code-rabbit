@@ -6,7 +6,6 @@ use App\Http\Requests\RemoveGameRequest;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Services\GameService;
-use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {

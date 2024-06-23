@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreLikeRequest extends FormRequest
@@ -27,7 +26,7 @@ class StoreLikeRequest extends FormRequest
     {
         return [
             'post_id' => [
-                Rule::unique('likes', 'post_id')->where('user_id', Auth::user()->id),
+                Rule::unique('likes', 'post_id')->where('user_id', authUserId()),
                 'required',
             ],
 

@@ -1,14 +1,12 @@
 <?php
 
-
 namespace App\Services\Admin;
 
-
 use App\Enums\StatusReportType;
-use App\Models\Post;
 use App\Models\Report;
 use App\Services\PostService;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ReportService
 {
@@ -17,21 +15,23 @@ class ReportService
         DB::beginTransaction();
 
         try {
-            $result = Report::find($arr['report_id']);
-            $result->update([
+            /** @var Report $report */
+            $report = Report::find($arr['report_id']);
+
+            if (!$report) {
+                return ['success' => false, 'message' => __('Report is not found')];
+            }
+
+            $report->update([
                 'status' => $arr['status'],
             ]);
 
             if ((int)data_get($arr, 'status', -99) === StatusReportType::ACCEPT) {
-                $resultPost = (new PostService())->remove($result->post_id);
+                $resultPost = (new PostService())->remove($report->post_id);
 
                 if (!$resultPost) {
                     return ['success' => false, 'message' => __('Post is not found')];
                 }
-            }
-
-            if (!$result) {
-                return ['success' => false, 'message' => __('Report is not found')];
             }
 
             DB::commit();

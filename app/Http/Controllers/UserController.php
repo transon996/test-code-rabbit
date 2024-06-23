@@ -7,7 +7,6 @@ use App\Http\Requests\UpdateUserInfoRequest;
 use App\Services\FavoriteGameService;
 use App\Services\FollowService;
 use App\Services\UserService;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -38,7 +37,7 @@ class UserController extends Controller
 
     public function edit()
     {
-        return view('user.edit')->with('user', Auth::user());
+        return view('user.edit')->with('user', authUser());
     }
 
     public function updateInfo(UpdateUserInfoRequest $request)
@@ -46,13 +45,13 @@ class UserController extends Controller
 
         $res = $this->userService->updateInfo($request->validated());
 
-        return redirect()->route('user.edit', Auth::user()->id)->with('msg', $res['message']);
+        return redirect()->route('user.edit', authUserId())->with('msg', $res['message']);
     }
 
     public function updateImg(UpdateImageRequest $request)
     {
 
         $res = $this->userService->updateImg($request->validated());
-        return redirect()->route('user', Auth::user()->id)->with('msg', $res['message']);
+        return redirect()->route('user', authUserId())->with('msg', $res['message']);
     }
 }
