@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Jobs\SendNewCommentPostEmail;
 use App\Services\CommentService;
+use App\Services\GeneralService;
 
 class CommentController extends Controller
 {
@@ -19,6 +20,7 @@ class CommentController extends Controller
 
     public function edit($post_id, $comment_id)
     {
+        $user = authUser();
         return view('comment.edit')->with('comment', $this->commentService->find($comment_id));
     }
 

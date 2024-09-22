@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RemoveFavoriteGame;
 use App\Http\Requests\StoreFavoriteGameRequest;
 use App\Services\FavoriteGameService;
-use App\Services\GameService;
 
 class FavoriteGameController extends Controller
 {
@@ -21,7 +20,7 @@ class FavoriteGameController extends Controller
     public function create()
     {
 
-        return view('user.addGame')->with('games', $this->gameService->games())
+        return view('user.addGame')->with('games', $this->gamService->games())
             ->with('favoriteGames', $this->favoriteGameService->findFGamesbyUserId(authUserId()));
     }
 

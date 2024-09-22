@@ -15,8 +15,18 @@ class UserService extends GeneralService
     public function updateImg(array $data): array
     {
         try {
-            data_get($data, 'avatar') &&
-            data_set($data, 'avatar', $this->hanldeFileAndGetFileName(data_get($data, 'avatar'), USER_DIR));
+            $file = data_get($data, 'avatar');
+            $filename = '';
+
+            if ($file) {
+                $filename = $file->getClientOriginalName();
+
+                if (!file_exists(public_path(USER_DIR) . $filename)) {
+                    $file->move(public_path(USER_DIR), $filename);
+                }
+            }
+
+            data_set($data, 'avatar', $filename);
 
             $result = User::where('id', authUserId())->update($data);
 
