@@ -7,6 +7,8 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Services\GameService;
 use App\Services\PostService;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -76,4 +78,10 @@ class PostController extends Controller
         return view('home')->with('posts', $res);
     }
 
+    public function search(Request $request)
+    {
+        $keyword = $request->get('keyword');
+        $posts = DB::select("SELECT * FROM posts WHERE title LIKE '%$keyword%'");
+        return view('home')->with('posts', $posts);
+    }
 }

@@ -47,6 +47,7 @@ Route::middleware(['user'])->group(function () {
 
     Route::get('/list-post/{type}', [PostController::class, 'showList'])->name('posts.list')
         ->where('type', '[0-9]+');
+    Route::get('/search-post', [PostController::class, 'search'])->name('posts.search');
 
 });
 Route::get('/home', [HomeController::class, 'index'])->name('home');

@@ -19,6 +19,7 @@ Route::prefix('admin')->group(function () {
     Route::middleware(['admin'])->group(function () {
 
         Route::resource('games', GameController::class);
+        Route::put('games/{id}/change-image', [GameController::class, 'changeImage'])->name('games.change-image');
         Route::post('/logout', [LoginController::class, 'destroy'])->name('admin.logout');
         Route::get('/home', [HomeController::class, 'index'])->name('admin.home');
 

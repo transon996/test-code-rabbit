@@ -6,6 +6,7 @@ use App\Http\Requests\RemoveGameRequest;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Services\GameService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
@@ -63,5 +64,12 @@ class GameController extends Controller
     {
         $res = $this->gameService->delete($id);
         return redirect()->route('games.index')->with('msg', $res['message']);
+    }
+
+    public function changeImage(Request $request, int $id)
+    {
+        $image = $request->file('image');
+        $res = $this->gameService->changeImage($image, $id);
+        return redirect()->route('games.edit', $id)->with('msg', $res['message']);
     }
 }

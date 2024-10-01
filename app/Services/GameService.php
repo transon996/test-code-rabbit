@@ -54,6 +54,22 @@ class GameService extends GeneralService
         }
     }
 
+    public function changeImage($image, int $gameId)
+    {
+        try {
+            $data['image'] = $this->hanldeFileAndGetFileName($image, GAME_DIR);
+            $game = Game::where('id', $gameId)->update($data);
+
+            if (!$game) {
+                return ['success' => false, 'message' => __('Game not found')];
+            }
+
+            return ['success' => true, 'message' => __('Game image has been updated')];
+        } catch (Exception $e) {
+            return ['success' => false, 'message' => __('Something went wrong')];
+        }
+    }
+
     public function delete(int $gameId): array
     {
         DB::beginTransaction();
