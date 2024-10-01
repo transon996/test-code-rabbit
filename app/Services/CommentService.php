@@ -5,8 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Comment;
-
-use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class CommentService
 {
@@ -20,7 +19,7 @@ class CommentService
     {
         try {
             Comment::create([
-                'user_id' => Auth::user()->id,
+                'user_id' => authUserId(),
                 'content' => $arr['content'],
                 'post_id' => $post_id,
             ]);

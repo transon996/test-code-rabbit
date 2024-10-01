@@ -54,17 +54,17 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->fullname }}
+                                {{ authUser()->fullname }}
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('user',Auth::user()->id) }}"
+                                <a class="dropdown-item" href="{{ route('user',authUserId()) }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('profile-form').submit();">
                                     {{ __('Profile') }}
                                 </a>
 
-                                <form id="profile-form" action="{{ route('user',Auth::user()->id)  }}" method="get"
+                                <form id="profile-form" action="{{ route('user',authUserId())  }}" method="get"
                                       class="d-none">
                                     @csrf
                                 </form>

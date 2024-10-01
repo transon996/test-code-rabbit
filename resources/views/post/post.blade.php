@@ -35,7 +35,7 @@
                         <p>{{$post->content}}</p>
                         <div style="display: flex">
 
-                            @if(Auth::user() && Auth::user()->id === $post->user_id)
+                            @if(authUserId() === $post->user_id)
                                 <form action="{{route('posts.edit',$post->id)}}" method="get">
                                     @csrf
                                     <input type="submit" class="btn btn-warning" value="Edit">
@@ -74,7 +74,7 @@
                         <div class="card-header">
                             <h3>{{$comment->user->fullname}}</h3>
                             <p>{{$comment->content}}</p>
-                            @if($comment->user_id === \Illuminate\Support\Facades\Auth::user()->id)
+                            @if($comment->user_id === authUserId())
                                 <div style="display: flex">
                                     <form action="{{route('posts.comments.destroy',[$post->id,$comment->id])}}"
                                           method="post">

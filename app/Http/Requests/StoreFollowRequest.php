@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreFollowRequest extends FormRequest
@@ -28,7 +27,7 @@ class StoreFollowRequest extends FormRequest
 
         return [
             'user_id2' => [
-                Rule::unique('follows', 'user_id2')->where('user_id1', Auth::user()->id),
+                Rule::unique('follows', 'user_id2')->where('user_id1', authUserId()),
             ]
         ];
     }

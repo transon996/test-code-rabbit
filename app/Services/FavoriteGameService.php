@@ -3,8 +3,7 @@
 namespace App\Services;
 
 use App\Models\FavoriteGame;
-use App\Models\Game;
-use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class FavoriteGameService
 {
@@ -27,7 +26,7 @@ class FavoriteGameService
         $data = [];
 
         foreach ($arr as $value) {
-            $data[] = ['user_id' => Auth::user()->id, 'game_id' => $value];
+            $data[] = ['user_id' => authUserId(), 'game_id' => $value];
         }
 
         return $data;

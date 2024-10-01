@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Models\FavoriteGame;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
 class RemoveFavoriteGame extends FormRequest
 {
@@ -16,7 +15,7 @@ class RemoveFavoriteGame extends FormRequest
     public function authorize()
     {
         $favoriteGame = FavoriteGame::find($this->route('id'));
-        return $favoriteGame && Auth::user()->id === $favoriteGame->user_id;
+        return $favoriteGame && authUserId() === $favoriteGame->user_id;
     }
 
     /**

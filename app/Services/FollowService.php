@@ -5,7 +5,7 @@ namespace App\Services;
 
 
 use App\Models\Follow;
-use Illuminate\Support\Facades\Auth;
+use Exception;
 
 class FollowService
 {
@@ -13,7 +13,7 @@ class FollowService
     {
         try {
             Follow::create([
-                'user_id1' => Auth::user()->id,
+                'user_id1' => authUserId(),
                 'user_id2' => $data['user_id2'],
             ]);
             return ['success' => true, 'message' => __('Follow has been created')];
@@ -24,13 +24,13 @@ class FollowService
 
     public function find(int $id)
     {
-        return Follow::where([['user_id1', Auth::user()->id], ['user_id2', $id]])->first();
+        return Follow::where([['user_id1', authUserId()], ['user_id2', $id]])->first();
     }
 
     public function update(array $arr): array
     {
         try {
-            $result = Follow::where([['user_id2', $arr['user_id2']], ['user_id1', Auth::user()->id]])->update([
+            $result = Follow::where([['user_id2', $arr['user_id2']], ['user_id1', authUserId()]])->update([
                 'status' => $arr['status'],
             ]);
 

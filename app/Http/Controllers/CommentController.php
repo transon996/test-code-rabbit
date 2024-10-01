@@ -7,7 +7,7 @@ use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 use App\Jobs\SendNewCommentPostEmail;
 use App\Services\CommentService;
-use Illuminate\Support\Facades\Auth;
+use App\Services\GeneralService;
 
 class CommentController extends Controller
 {
@@ -20,6 +20,7 @@ class CommentController extends Controller
 
     public function edit($post_id, $comment_id)
     {
+        $user = authUser();
         return view('comment.edit')->with('comment', $this->commentService->find($comment_id));
     }
 
@@ -34,7 +35,7 @@ class CommentController extends Controller
         $res = $this->commentService->create($request->validated(), $post_id);
 
         if ($res['success']) {
-            SendNewCommentPostEmail::dispatch($post_id, Auth::user())->onQueue('comment');
+            SendNewCommentPostEmail::dispatch($post_id, authUser())->onQueue('comment');
         }
 
         return redirect()->route('posts.show', $post_id)->with('msg', $res['message']);

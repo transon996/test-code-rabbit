@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreFavoriteGameRequest extends FormRequest
@@ -27,7 +26,7 @@ class StoreFavoriteGameRequest extends FormRequest
     {
         return [
             'game_id.*' => [
-                Rule::unique('favorite_games', 'game_id')->where('user_id', Auth::user()->id),
+                Rule::unique('favorite_games', 'game_id')->where('user_id', authUserId()),
             ],
 
         ];
